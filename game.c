@@ -49,6 +49,7 @@ int main(int argc, char const *argv[])
 			if (insert(board))
 			{
 				red("Game Over\n");
+				free(board);
 				return 0;
 			}
 		}
