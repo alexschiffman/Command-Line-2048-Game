@@ -16,7 +16,7 @@ void print(int** board);
 void print_number(int n);
 void setup(int** board);
 int insert(int** board);
-char get_move();
+char get_move(int** board);
 int move(int** board, char dir);
 
 void black(char* text);
@@ -43,7 +43,7 @@ int main(int argc, char const *argv[])
 
 	while (1)
 	{
-		char in = get_move();
+		char in = get_move(board);
 		if (move(board, in))
 		{
 			if (insert(board))
@@ -60,27 +60,35 @@ int main(int argc, char const *argv[])
 }
 
 
-char get_move()
+char get_move(int** board)
 {
 	char in;
 	scanf("%c", &in);
 
 	if (in == 'q')
 	{
-		while (1)
+		while(in != 'y' && in != 'n')
 		{
+			while (getchar() != '\n'); //clear the input buffer
 			red("Quit? [y/n]\n");
 			scanf("%c", &in);
-			if (in == 'y' || in == 'n') break;
 		}
 		
-		if (in == 'y') exit(0);
-		else get_move();
+		if (in == 'y')
+		{
+			free(board);
+			exit(0);
+		}
+		else
+		{
+			print(board);
+			return get_move(board);
+		}
 	}
 
 	if (in != 'w' && in != 'a' && in != 's' && in != 'd')
 	{
-		return get_move();
+		return get_move(board);
 	}
 
 	return in;
